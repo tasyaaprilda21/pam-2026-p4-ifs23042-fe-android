@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Delcom Plants"
+rootProject.name = "ifs23042-pam-p5"
 include(":app")
