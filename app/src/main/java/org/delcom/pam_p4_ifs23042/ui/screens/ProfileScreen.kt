@@ -1,5 +1,6 @@
 package org.delcom.pam_p4_ifs23042.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -19,16 +20,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,98 +32,50 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import org.delcom.pam_p4_ifs23042.R
-import org.delcom.pam_p4_ifs23042.helper.RouteHelper
-import org.delcom.pam_p4_ifs23042.helper.ToolsHelper
-import org.delcom.pam_p4_ifs23042.network.plants.data.ResponseProfile
 import org.delcom.pam_p4_ifs23042.ui.components.BottomNavComponent
-import org.delcom.pam_p4_ifs23042.ui.components.LoadingUI
 import org.delcom.pam_p4_ifs23042.ui.components.TopAppBarComponent
 import org.delcom.pam_p4_ifs23042.ui.theme.DelcomTheme
 import org.delcom.pam_p4_ifs23042.ui.viewmodels.PlantViewModel
-import org.delcom.pam_p4_ifs23042.ui.viewmodels.ProfileUIState
 
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
     plantViewModel: PlantViewModel
 ) {
-    // Ambil data dari viewmodel
-    val uiStatePlant by plantViewModel.uiState.collectAsState()
-
-    var isLoading by remember { mutableStateOf(false) }
-    var profile by remember { mutableStateOf<ResponseProfile?>(null) }
-
-    LaunchedEffect(Unit) {
-        isLoading = true
-        plantViewModel.getProfile()
-    }
-
-    LaunchedEffect(uiStatePlant.profile) {
-        if(uiStatePlant.profile !is ProfileUIState.Loading){
-            isLoading = false
-            if(uiStatePlant.profile is ProfileUIState.Success){
-                profile = (uiStatePlant.profile as ProfileUIState.Success).data
-            }else{
-                RouteHelper.back(navController)
-            }
-        }
-    }
-
-    // Tampilkan halaman loading
-    if(isLoading || profile == null){
-        LoadingUI()
-        return
-    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Top App Bar
         TopAppBarComponent(navController = navController, title = "Profile", false)
-        // Content
-        Box(
-            modifier = Modifier
-                .weight(1f)
-        ) {
-            ProfileUI(
-                profile = profile!!
-            )
+        Box(modifier = Modifier.weight(1f)) {
+            ProfileUI()
         }
-        // Bottom Nav
         BottomNavComponent(navController = navController)
     }
 }
 
 @Composable
-fun ProfileUI(
-    profile: ResponseProfile
-){
+fun ProfileUI() {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-
-        // Header Profile
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 32.dp, bottom = 16.dp),
             contentAlignment = Alignment.Center
         ) {
-
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-                // Foto Profil
-                AsyncImage(
-                    model = ToolsHelper.getProfilePhotoUrl(),
-                    contentDescription = "Photo Profil",
-                    placeholder = painterResource(R.drawable.img_placeholder),
-                    error = painterResource(R.drawable.img_placeholder),
+                // Foto dari drawable langsung
+                Image(
+                    painter = painterResource(R.drawable.fotoprofil),
+                    contentDescription = "Foto Profil",
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(110.dp)
                         .clip(CircleShape)
@@ -137,20 +85,19 @@ fun ProfileUI(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = profile.nama,
+                    text = "Tasya Aprilda Marbun",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
 
                 Text(
-                    text = profile.username,
+                    text = "ifs23042",
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
 
-        // Bio Section
         Card(
             modifier = Modifier
                 .padding(16.dp)
@@ -169,7 +116,7 @@ fun ProfileUI(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    profile.tentang,
+                    text = "Mahasiswa Informatika Institut Teknologi Del yang tertarik pada pengembangan aplikasi mobile dan backend API. Senang belajar hal baru dan membangun aplikasi yang berguna.",
                     fontSize = 15.sp
                 )
             }
@@ -181,14 +128,8 @@ fun ProfileUI(
 
 @Preview(showBackground = true, name = "Light Mode")
 @Composable
-fun PreviewProfileUI(){
+fun PreviewProfileUI() {
     DelcomTheme {
-        ProfileUI(
-            profile = ResponseProfile(
-                nama = "Abdullah Ubaid",
-                username = "ifs18005",
-                tentang = ""
-            )
-        )
+        ProfileUI()
     }
 }

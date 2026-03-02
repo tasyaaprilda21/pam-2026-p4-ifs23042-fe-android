@@ -24,7 +24,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL_PANTS_API", "\"https://pam-2026-p4-ifs18005-be.delcom.org:8080/\"")
+
         buildConfigField("String", "BASE_URL_BAGS_API", "\"https://pam-2026-p4-ifs23042-be.ifs23042.fun:8080/\"")
     }
 

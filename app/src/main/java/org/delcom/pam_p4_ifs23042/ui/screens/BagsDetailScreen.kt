@@ -125,7 +125,7 @@ fun BagsDetailScreen(
                     .padding(16.dp)
             ) {
                 AsyncImage(
-                    model = "${BuildConfig.BASE_URL_PANTS_API}bags/${b.id}/image",
+                    model = "${BuildConfig.BASE_URL_BAGS_API}bags/${b.id}/image",
                     contentDescription = b.nama,
                     placeholder = painterResource(R.drawable.img_placeholder),
                     error = painterResource(R.drawable.img_placeholder),

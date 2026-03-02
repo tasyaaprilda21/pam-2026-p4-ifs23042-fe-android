@@ -174,7 +174,7 @@ fun BagItemUI(
                 .padding(12.dp)
         ) {
             AsyncImage(
-                model = "${org.delcom.pam_p4_ifs23042.BuildConfig.BASE_URL_PANTS_API}bags/${bag.id}/image",
+                model = "${org.delcom.pam_p4_ifs23042.BuildConfig.BASE_URL_BAGS_API}bags/${bag.id}/image",
                 contentDescription = bag.nama,
                 placeholder = painterResource(R.drawable.img_placeholder),
                 error = painterResource(R.drawable.img_placeholder),

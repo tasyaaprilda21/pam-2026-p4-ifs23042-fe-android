@@ -27,7 +27,7 @@ class PlantAppContainer: IPlantAppContainer {
     }.build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL_PANTS_API)
+        .baseUrl(BuildConfig.BASE_URL_BAGS_API)
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()

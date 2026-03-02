@@ -12,11 +12,11 @@ import java.io.File
 
 object ToolsHelper {
     fun getPlantImageUrl(plantId: String): String{
-        return "${BuildConfig.BASE_URL_PANTS_API}plants/${plantId}/image"
+        return "${BuildConfig.BASE_URL_BAGS_API}plants/${plantId}/image"
     }
 
     fun getProfilePhotoUrl(): String{
-        return "${BuildConfig.BASE_URL_PANTS_API}profile/photo"
+        return "${BuildConfig.BASE_URL_BAGS_API}profile/photo"
     }
 
     fun String.toRequestBodyText(): RequestBody {
